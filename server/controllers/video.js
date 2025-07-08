@@ -67,7 +67,6 @@ export const handlePoints = async (req, res) => {
 
   try {
     const {email} = req.body;
-    console.log(email);
     const userPoints = await Points.findOne({ email });
 if (!userPoints) {
   return res.status(404).json({ message: "User not found" });
