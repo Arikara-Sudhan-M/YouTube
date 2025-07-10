@@ -1,5 +1,5 @@
 import { Bell, Menu, Mic, Search, User, VideoIcon } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { Input } from "./ui/input";
@@ -14,13 +14,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import Channeldialogue from "./channeldialogue";
 import { useRouter } from "next/router";
 import { useUser } from "@/lib/AuthContext";
-import { Axios } from "axios";
-import axiosInstance from "@/lib/axiosinstance";
 
 const Header = () => {
-  
   const { user, logout, handlegooglesignin } = useUser();
-  const [points, setPoints] = useState(0);
   // const user: any = {
   //   id: "1",
   //   name: "John Doe",
@@ -36,32 +32,11 @@ const Header = () => {
       router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
     }
   };
-
   const handleKeypress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       handleSearch(e as any);
     }
   };
-
-useEffect(() => {
-  const handlePoints = async () => {
-    if (user?.email) {
-      try {
-        console.log("hjbdsnm")
-        const response = await axiosInstance.post('/video/points', {
-          email: user.email,
-        });
-        setPoints(response.data.points);
-      } catch (error) {
-        console.log("Error fetching points:", error);
-      }
-    }
-  };
-
-  handlePoints();
-}, [user]);
-
-                                                             
   return (
     <header className="flex items-center justify-between px-4 py-2 bg-white border-b">
       <div className="flex items-center gap-4">
@@ -143,8 +118,6 @@ useEffect(() => {
                 <DropdownMenuItem asChild>
                   <Link href="/history">History</Link>
                 </DropdownMenuItem>
-          
-                <DropdownMenuItem >Points {points}</DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/liked">Liked videos</Link>
                 </DropdownMenuItem>

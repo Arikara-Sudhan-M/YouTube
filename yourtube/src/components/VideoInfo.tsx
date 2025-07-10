@@ -2,13 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import { Button } from "./ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
-
-import {
   Clock,
   Download,
   MoreHorizontal,
@@ -28,7 +21,6 @@ const VideoInfo = ({ video }: any) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
   const { user } = useUser();
   const [isWatchLater, setIsWatchLater] = useState(false);
-  const [error, setError] = useState(false);
 
   // const user: any = {
   //   id: "1",
@@ -59,14 +51,8 @@ const VideoInfo = ({ video }: any) => {
     };
     handleviews();
   }, [user]);
-  
   const handleLike = async () => {
-  
-    if (!user) {
-      setError(true);
-      console.log("USer not found")
-      return;
-    }
+    if (!user) return;
     try {
       const res = await axiosInstance.post(`/like/${video._id}`, {
         userId: user?._id,
@@ -102,36 +88,6 @@ const VideoInfo = ({ video }: any) => {
       console.log(error);
     }
   };
-  const handleShare = () => {
-  const shareUrl = window.location.href;
-
-  // Option 1: Native share dialog (for mobile/web)
-  if (navigator.share) {
-    navigator
-      .share({
-        title: video.videotitle,
-        text: "Check out this video!",
-        url: shareUrl,
-      })
-      .catch((error) => console.log("Error sharing", error));
-  } else {
-    navigator.clipboard
-      .writeText(shareUrl)
-      .then(() => alert("Link copied to clipboard!"))
-      .catch((error) => console.log("Copy failed", error));
-  }
-};
-const handleDownload = () => {
-  const videoUrl = `http://localhost:5000/${video.filepath}`; 
-  const link = document.createElement('a');
-  link.href = videoUrl;
-  link.setAttribute('download', video.videotitle || 'video.mp4');
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-};
-
-
   const handleDislike = async () => {
     if (!user) return;
     try {
@@ -168,22 +124,20 @@ const handleDownload = () => {
             <h3 className="font-medium">{video.videochanel}</h3>
             <p className="text-sm text-gray-600">1.2M subscribers</p>
           </div>
-          <Button className="ml-4 cursor-pointer">Subscribe</Button>
+          <Button className="ml-4">Subscribe</Button>
         </div>
         <div className="flex items-center gap-2">
           <div className="flex items-center bg-gray-100 rounded-full">
             <Button
-              type="button"
               variant="ghost"
               size="sm"
-              className="rounded-l-full cursor-pointer"
+              className="rounded-l-full"
               onClick={handleLike}
             >
               <ThumbsUp
                 className={`w-5 h-5 mr-2 ${
                   isLiked ? "fill-black text-black" : ""
                 }`}
-              
               />
               {likes.toLocaleString()}
             </Button>
@@ -191,8 +145,7 @@ const handleDownload = () => {
             <Button
               variant="ghost"
               size="sm"
-              className="rounded-r-full cursor-pointer"
-
+              className="rounded-r-full"
               onClick={handleDislike}
             >
               <ThumbsDown
@@ -206,7 +159,7 @@ const handleDownload = () => {
           <Button
             variant="ghost"
             size="sm"
-            className={`bg-gray-100 rounded-full cursor-pointer ${
+            className={`bg-gray-100 rounded-full ${
               isWatchLater ? "text-primary" : ""
             }`}
             onClick={handleWatchLater}
@@ -217,8 +170,7 @@ const handleDownload = () => {
           <Button
             variant="ghost"
             size="sm"
-            className="bg-gray-100 rounded-full cursor-pointer"
-            onClick={handleShare}
+            className="bg-gray-100 rounded-full"
           >
             <Share className="w-5 h-5 mr-2" />
             Share
@@ -226,35 +178,18 @@ const handleDownload = () => {
           <Button
             variant="ghost"
             size="sm"
-            className="bg-gray-100 rounded-full cursor-pointer"
-            onClick={handleDownload}
+            className="bg-gray-100 rounded-full"
           >
             <Download className="w-5 h-5 mr-2" />
             Download
           </Button>
-         <DropdownMenu>
-  <DropdownMenuTrigger asChild>
-    <Button
-      variant="ghost"
-      size="icon"
-      className="bg-gray-100 rounded-full cursor-pointer"
-    >
-      <MoreHorizontal className="w-5 h-5" />
-    </Button>
-  </DropdownMenuTrigger>
-  <DropdownMenuContent>
-    <DropdownMenuItem onClick={() => alert("Report clicked")}>
-      Report
-    </DropdownMenuItem>
-    <DropdownMenuItem onClick={() => alert("Save to playlist clicked")}>
-      Save to Playlist
-    </DropdownMenuItem>
-    <DropdownMenuItem onClick={() => window.open(window.location.href, "_blank")}>
-      Open in New Tab
-    </DropdownMenuItem>
-  </DropdownMenuContent>
-</DropdownMenu>
-
+          <Button
+            variant="ghost"
+            size="icon"
+            className="bg-gray-100 rounded-full"
+          >
+            <MoreHorizontal className="w-5 h-5" />
+          </Button>
         </div>
       </div>
       <div className="bg-gray-100 rounded-lg p-4">
@@ -271,7 +206,7 @@ const handleDownload = () => {
         <Button
           variant="ghost"
           size="sm"
-          className="mt-2 p-0 h-auto font-medium cursor-pointer text-blue-500"
+          className="mt-2 p-0 h-auto font-medium"
           onClick={() => setShowFullDescription(!showFullDescription)}
         >
           {showFullDescription ? "Show less" : "Show more"}

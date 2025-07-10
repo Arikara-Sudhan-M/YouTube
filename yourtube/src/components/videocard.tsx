@@ -1,37 +1,22 @@
-"use clinet";
+"use client";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import { Avatar, AvatarFallback } from "./ui/avatar";
-import axiosInstance from "@/lib/axiosinstance";
-import { useUser } from "@/lib/AuthContext";
 
-const videos = "/video/vdo.mp4";
 export default function VideoCard({ video }: any) {
-  const {user} = useUser();
-
- const increasePoints = async () => {
-  if (!user || !user.email) {
-    console.log("User not loaded or email is undefined");
-    return;
-  }
-
-  try {
-    console.log("Increasing points for:", user.email);
-    await axiosInstance.post('/video/increasePoints', {
-      email: user.email
-    });
-  } catch (error) {
-    console.log("Error in increasePoints:", error);
-  }
-};
+  const backendURL = "https://yourtube-hspf.onrender.com";
+  const videoSrc = `${backendURL}/${video?.filepath.replace(/\\/g, "/")}`;
 
   return (
-    <Link href={`/watch/${video?._id}`} className="group" onClick={increasePoints}>
+    <Link href={`/watch/${video?._id}`} className="group">
       <div className="space-y-3">
         <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-100">
           <video
-            src={`/${video?.filepath}`}
+            src={videoSrc}
             className="object-cover group-hover:scale-105 transition-transform duration-200"
+            muted
+            autoPlay
+            loop
           />
           <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-1 rounded">
             10:24
