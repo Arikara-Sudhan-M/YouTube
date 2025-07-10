@@ -14,7 +14,7 @@ dotenv.config();
 const app = express();
 import path from "path";
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: "https://yourtube-hspf.onrender.com",
   credentials: true
 }));
 
