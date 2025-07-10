@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 
 interface VideoPlayerProps {
   video: {
@@ -10,9 +10,12 @@ interface VideoPlayerProps {
   };
 }
 
+const backendURL = process.env.BACKEND_URL!;
+
 export default function VideoPlayer({ video }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const videos = "/video/vdo.mp4";
+
+  const videoSrc = `${backendURL}/${video.filepath.replace(/\\/g, "/")}`;
 
   return (
     <div className="aspect-video bg-black rounded-lg overflow-hidden">
@@ -23,7 +26,7 @@ export default function VideoPlayer({ video }: VideoPlayerProps) {
         poster={`/placeholder.svg?height=480&width=854`}
       >
         <source
-          src={`BACKEND_URL/${video?.filepath}`}
+          src={videoSrc}
           type="video/mp4"
         />
         Your browser does not support the video tag.
