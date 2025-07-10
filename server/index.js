@@ -18,7 +18,7 @@ dotenv.config();
 const app = express();
 import path from "path";
 app.use(cors({
-  origin: "https://yourtube-hspf.onrender.com",
+  origin: "https://you-tube-pink-omega.vercel.app",
   credentials: true
 }));
 
