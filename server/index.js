@@ -9,6 +9,10 @@ import likeroutes from "./routes/like.js";
 import watchlaterroutes from "./routes/watchlater.js";
 import historyrroutes from "./routes/history.js";
 import commentroutes from "./routes/comment.js";
+const allowedOrigins = [
+  "https://you-tube-pink-omega.vercel.app",
+  "http://localhost:3000" 
+];
 
 dotenv.config();
 const app = express();
