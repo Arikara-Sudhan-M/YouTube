@@ -5,9 +5,11 @@ import { Avatar, AvatarFallback } from "./ui/avatar";
 import { useUser } from "@/lib/AuthContext";
 import axiosInstance from "@/lib/axiosinstance";
 
+
+
 export default function VideoCard({ video }: any) {
 
-      const {user} = useUser();
+    const {user} = useUser();
 
  const increasePoints = async () => {
   if (!user || !user.email) {
@@ -25,11 +27,11 @@ export default function VideoCard({ video }: any) {
   }
 };
 
-  const backendURL = "https://yourtube-hspf.onrender.com";
+  const backendURL = "https://you-tube-pink-omega.vercel.app";
   const videoSrc = `${backendURL}/${video?.filepath.replace(/\\/g, "/")}`;
 
   return (
-    <Link href={`/watch/${video?._id}`} className="group">
+    <Link href={`/watch/${video?._id}`} className="group"  onClick={increasePoints}>
       <div className="space-y-3">
         <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-100">
           <video
