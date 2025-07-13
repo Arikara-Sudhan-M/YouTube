@@ -17,6 +17,7 @@ import { useUser } from "@/lib/AuthContext";
 
 const Header = () => {
   const { user, logout, handlegooglesignin } = useUser();
+  const [points,setPoints] = useState(0);
   // const user: any = {
   //   id: "1",
   //   name: "John Doe",
@@ -37,6 +38,24 @@ const Header = () => {
       handleSearch(e as any);
     }
   };
+  useEffect(() => {
+  const handlePoints = async () => {
+    if (user?.email) {
+      try {
+        console.log("hjbdsnm")
+        const response = await axiosInstance.post('/video/points', {
+          email: user.email,
+        });
+        setPoints(response.data.points);
+      } catch (error) {
+        console.log("Error fetching points:", error);
+      }
+    }
+  };
+
+  handlePoints();
+}, [user]);
+
   return (
     <header className="flex items-center justify-between px-4 py-2 bg-white border-b">
       <div className="flex items-center gap-4">
@@ -118,6 +137,8 @@ const Header = () => {
                 <DropdownMenuItem asChild>
                   <Link href="/history">History</Link>
                 </DropdownMenuItem>
+                 <DropdownMenuItem >Points {points}</DropdownMenuItem>
+                <DropdownMenuItem asChild>
                 <DropdownMenuItem asChild>
                   <Link href="/liked">Liked videos</Link>
                 </DropdownMenuItem>
