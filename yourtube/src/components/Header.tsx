@@ -139,7 +139,6 @@ const Header = () => {
                 </DropdownMenuItem>
                  <DropdownMenuItem >Points {points}</DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                <DropdownMenuItem asChild>
                   <Link href="/liked">Liked videos</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
