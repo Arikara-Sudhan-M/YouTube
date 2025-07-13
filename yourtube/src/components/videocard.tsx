@@ -2,8 +2,29 @@
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import { Avatar, AvatarFallback } from "./ui/avatar";
+import { useUser } from "@/lib/AuthContext";
+import axiosInstance from "@/lib/axiosinstance";
 
 export default function VideoCard({ video }: any) {
+
+      const {user} = useUser();
+
+ const increasePoints = async () => {
+  if (!user || !user.email) {
+    console.log("User not loaded or email is undefined");
+    return;
+  }
+
+  try {
+    console.log("Increasing points for:", user.email);
+    await axiosInstance.post('/video/increasePoints', {
+      email: user.email
+    });
+  } catch (error) {
+    console.log("Error in increasePoints:", error);
+  }
+};
+
   const backendURL = "https://yourtube-hspf.onrender.com";
   const videoSrc = `${backendURL}/${video?.filepath.replace(/\\/g, "/")}`;
 
