@@ -1,7 +1,8 @@
 import { onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
+import { auth, provider } from "../firebase";
+
 import { useState } from "react";
 import { createContext } from "react";
-import { provider, auth } from "./firebase";
 import axiosInstance from "./axiosinstance";
 import { useEffect, useContext } from "react";
 
