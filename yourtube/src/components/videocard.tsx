@@ -35,12 +35,13 @@ export default function VideoCard({ video }: any) {
       <div className="space-y-3">
         <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-100">
           <video
-            src={videoSrc}
-            className="object-cover group-hover:scale-105 transition-transform duration-200"
-            muted
-            autoPlay
-            loop
-          />
+          src={video.filepath}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-full rounded-md"
+        />
           <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-1 rounded">
             10:24
           </div>
